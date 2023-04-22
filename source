@@ -9,7 +9,7 @@ COREGUI = game:GetService("CoreGui")
 if not game:IsLoaded() then
 	local notLoaded = Instance.new("Message")
 	notLoaded.Parent = COREGUI
-	notLoaded.Text = 'Infinite Yield is waiting for the game to load'
+	notLoaded.Text = 'Infinite Fun (Infinite Yield mod) is waiting for the experience to load'
 	game.Loaded:Wait()
 	notLoaded:Destroy()
 end
@@ -4491,7 +4491,6 @@ CMDs[#CMDs + 1] = {NAME = 'teleport / tp [plr] [plr] (TOOL)', DESC = 'Teleports 
 CMDs[#CMDs + 1] = {NAME = 'fastteleport / fasttp [plr] [plr] (TOOL)', DESC = 'Teleports a player to another player (less reliable) (YOU NEED A TOOL)'}
 CMDs[#CMDs + 1] = {NAME = 'fling', DESC = 'Flings anyone you touch'}
 CMDs[#CMDs + 1] = {NAME = 'unfling', DESC = 'Disables the fling command'}
-CMDs[#CMDs + 1] = {NAME = 'invisfling', DESC = 'Enables invisible fling'}
 CMDs[#CMDs + 1] = {NAME = 'loopoof', DESC = 'Loops everyones character sounds (everyone can hear)'}
 CMDs[#CMDs + 1] = {NAME = 'unloopoof', DESC = 'Stops the oof chaos'}
 CMDs[#CMDs + 1] = {NAME = 'muteboombox [plr]', DESC = 'Mutes someones boombox'}
@@ -5458,14 +5457,15 @@ function ESP(plr)
 				BillboardGui.Adornee = plr.Character.Head
 				BillboardGui.Name = plr.Name
 				BillboardGui.Parent = ESPholder
-				BillboardGui.Size = UDim2.new(0, 100, 0, 150)
+				BillboardGui.Size = UDim2.new(0, 125, 0, 175)
 				BillboardGui.StudsOffset = Vector3.new(0, 1, 0)
 				BillboardGui.AlwaysOnTop = true
 				TextLabel.Parent = BillboardGui
 				TextLabel.BackgroundTransparency = 1
 				TextLabel.Position = UDim2.new(0, 0, 0, -50)
 				TextLabel.Size = UDim2.new(0, 100, 0, 100)
-				TextLabel.Font = Enum.Font.SourceSansSemibold
+				TextLabel.Font = Enum.Font.FredokaOne
+				TextLabel.RichText = true
 				TextLabel.TextSize = 20
 				TextLabel.TextColor3 = Color3.new(1, 1, 1)
 				TextLabel.TextStrokeTransparency = 0
@@ -5504,7 +5504,7 @@ function ESP(plr)
 					if COREGUI:FindFirstChild(plr.Name..'_ESP') then
 						if plr.Character and getRoot(plr.Character) and plr.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
 							local pos = math.floor((getRoot(Players.LocalPlayer.Character).Position - getRoot(plr.Character).Position).magnitude)
-							TextLabel.Text = 'Name: '..plr.Name..' | Health: '..round(plr.Character:FindFirstChildOfClass('Humanoid').Health, 1)..' | Studs: '..pos
+							TextLabel.Text = 'Name: '..plr.DisplayName..' ('..plr.Name..')<br/>Dist: '..pos
 						end
 					else
 						teamChange:Disconnect()
@@ -11258,54 +11258,6 @@ addcmd('togglefling',{},function(args, speaker)
 	else
 		execCmd('fling')
 	end
-end)
-
-addcmd('invisfling',{},function(args, speaker)
-	local ch = speaker.Character
-	local prt=Instance.new("Model")
-	prt.Parent = speaker.Character
-	local z1 = Instance.new("Part")
-	z1.Name="Torso"
-	z1.CanCollide = false
-	z1.Anchored = true
-	local z2 = Instance.new("Part")
-	z2.Name="Head"
-	z2.Parent = prt
-	z2.Anchored = true
-	z2.CanCollide = false
-	local z3 =Instance.new("Humanoid")
-	z3.Name="Humanoid"
-	z3.Parent = prt
-	z1.Position = Vector3.new(0,9999,0)
-	speaker.Character=prt
-	wait(3)
-	speaker.Character=ch
-	wait(3)
-	local Hum = Instance.new("Humanoid")
-	z2:Clone()
-	Hum.Parent = speaker.Character
-	local root =  getRoot(speaker.Character)
-	for i,v in pairs(speaker.Character:GetChildren()) do
-		if v ~= root and  v.Name ~= "Humanoid" then
-			v:Destroy()
-		end
-	end
-	root.Transparency = 0
-	root.Color = Color3.new(1, 1, 1)
-	local invisflingStepped
-	invisflingStepped = RunService.Stepped:Connect(function()
-		if speaker.Character and getRoot(speaker.Character) then
-			getRoot(speaker.Character).CanCollide = false
-		else
-			invisflingStepped:Disconnect()
-		end
-	end)
-	sFLY()
-	workspace.CurrentCamera.CameraSubject = root
-	local bambam = Instance.new("BodyThrust")
-	bambam.Parent = getRoot(speaker.Character)
-	bambam.Force = Vector3.new(99999,99999*10,99999)
-	bambam.Location = getRoot(speaker.Character).Position
 end)
 
 function attach(speaker,target)
