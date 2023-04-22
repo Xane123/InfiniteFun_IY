@@ -5425,6 +5425,16 @@ function round(num, numDecimalPlaces)
 	return math.floor(num * mult + 0.5) / mult
 end
 
+-- [XANE] Checks to see if the given team exists. If it can't be found, a random color is picked based on their user ID.
+function GetESPColorForPlayer(_player : Player, _team : string)
+	local color = Color3.new(0,0,0)
+	if game:GetService("Teams"):FindFirstChild(_team) then color = _player.TeamColor
+	else color = Color3.new(math.random(), math.random(), math.random())
+	end
+	
+	return color
+end
+
 function ESP(plr)
 	task.spawn(function()
 		for i,v in pairs(COREGUI:GetChildren()) do
@@ -5448,7 +5458,7 @@ function ESP(plr)
 					a.ZIndex = 10
 					a.Size = n.Size
 					a.Transparency = espTransparency
-					a.Color = plr.TeamColor
+					a.Color = GetESPColorForPlayer(plr, plr.Team.Name)
 				end
 			end
 			if plr.Character and plr.Character:FindFirstChild('Head') then
@@ -5467,7 +5477,7 @@ function ESP(plr)
 				TextLabel.Font = Enum.Font.FredokaOne
 				TextLabel.RichText = true
 				TextLabel.TextSize = 20
-				TextLabel.TextColor3 = Color3.new(1, 1, 1)
+				TextLabel.TextColor3 = GetESPColorForPlayer(plr, plr.Team.Name)
 				TextLabel.TextStrokeTransparency = 0
 				TextLabel.TextYAlignment = Enum.TextYAlignment.Bottom
 				TextLabel.Text = 'Name: '..plr.Name
