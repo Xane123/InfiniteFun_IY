@@ -5426,7 +5426,7 @@ function round(num, numDecimalPlaces)
 end
 
 -- [XANE] Checks to see if the given team exists. If it can't be found, a random color is picked based on their user ID.
-function GetESPColorForPlayer(_player : Player, _team : string)
+function GetESPColorForPlayer(_player, _team)
 	local color = Color3.new(1,1,1)	-- Use white by default.
 	if _team then color = _team.TeamColor
 	else color = Color3.new(math.random(), math.random(), math.random())
@@ -5448,6 +5448,12 @@ function ESP(plr)
 			ESPholder.Name = plr.Name..'_ESP'
 			ESPholder.Parent = COREGUI
 			repeat wait(1) until plr.Character and getRoot(plr.Character) and plr.Character:FindFirstChildOfClass("Humanoid")
+			
+			-- If this player hasn't been formally given a coolor for ESP, generate that before continuing.
+			if not plr:GetAttribute("ESPColor") then
+			    plr:SetAttribute("ESPColor", GetESPColorForPlayer(plr, plr.Team))
+			end
+			
 			for b,n in pairs (plr.Character:GetChildren()) do
 				if (n:IsA("BasePart")) then
 					local a = Instance.new("BoxHandleAdornment")
@@ -5458,7 +5464,7 @@ function ESP(plr)
 					a.ZIndex = 10
 					a.Size = n.Size
 					a.Transparency = espTransparency
-					a.Color = GetESPColorForPlayer(plr, plr.Team)
+					a.Color3 = plr:GetAttribute("ESPColor")
 				end
 			end
 			if plr.Character and plr.Character:FindFirstChild('Head') then
@@ -5477,7 +5483,7 @@ function ESP(plr)
 				TextLabel.Font = Enum.Font.FredokaOne
 				TextLabel.RichText = true
 				TextLabel.TextSize = 20
-				TextLabel.TextColor3 = GetESPColorForPlayer(plr, plr.Team)
+				TextLabel.TextColor3 = plr:GetAttribute("ESPColor")
 				TextLabel.TextStrokeTransparency = 0
 				TextLabel.TextYAlignment = Enum.TextYAlignment.Bottom
 				TextLabel.Text = 'Name: '..plr.Name
