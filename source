@@ -206,7 +206,7 @@ Title.BorderSizePixel = 0
 Title.Size = UDim2.new(0, 250, 0, 20)
 Title.Font = Enum.Font.SourceSans
 Title.TextSize = 18
-Title.Text = "Infinite Yield FE v" .. currentVersion
+Title.Text = "Infinite Fun (IY mod) v" .. currentVersion
 
 do
 	local emoji = ({
@@ -229,7 +229,8 @@ do
 			return ("03 %02d"):format(G)
 		end)(tonumber(os.date"%Y"))] = "🥚",
 		["10 31"] = "🎃",
-		["12 25"] = "🎄"
+		["12 25"] = "🎄",
+		["6 20"] = "🟦"
 	})[os.date("%m %d")]
 	if emoji then
 		Title.Text = ("%s %s %s"):format(emoji, Title.Text, emoji)
@@ -5429,7 +5430,7 @@ end
 function GetESPColorForPlayer(_player, _team)
 	local color = Color3.new(1,1,1)	-- Use white by default.
 	if _team then color = _team.TeamColor
-	else color = Color3.new(math.random(), math.random(), math.random())
+	else color = Color3.fromHSV(math.random(), math.random()/5, 1)	-- Only use lighter colors.
 	end
 	
 	return color
