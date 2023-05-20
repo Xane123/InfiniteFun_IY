@@ -1,5 +1,5 @@
 if IY_LOADED and not _G.IY_DEBUG == true then
-	-- error("Infinite Yield is already running!",0)
+	error("Infinite Fun (mod) or Infinite Yield itself is already running!",0)
 	return
 end
 
@@ -2759,7 +2759,7 @@ reference = (function()
 		lastPress = pressTime
 		wait(2)
 		if lastPress ~= pressTime then return end
-		inviteButton.Text = "Copy Discord Invite Link (https://discord.io/infiniteyield)"
+		inviteButton.Text = "Copy IY Discord Invite Link (https://discord.io/infiniteyield) (This isn't Infinite Fun-specific!)"
 	end)
 	dragGUI(main)
 	main.Parent = PARENT
@@ -4249,7 +4249,7 @@ function autoComplete(str,curText)
 end
 
 CMDs = {}
-CMDs[#CMDs + 1] = {NAME = 'discord / support / help', DESC = 'Invite to the Infinite Yield support server.'}
+CMDs[#CMDs + 1] = {NAME = 'discord / support / help', DESC = 'Join Infinite Yield\'s Discord server. (This isn\'t for Infinite Fun.)'}
 CMDs[#CMDs + 1] = {NAME = 'console', DESC = 'Loads old Roblox console'}
 CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX by Moon'}
 CMDs[#CMDs + 1] = {NAME = 'olddex / odex', DESC = 'Opens Old DEX by Moon'}
@@ -4334,6 +4334,7 @@ CMDs[#CMDs + 1] = {NAME = 'goto [plr]', DESC = 'Go to a player'}
 CMDs[#CMDs + 1] = {NAME = 'tweengoto / tgoto [plr]', DESC = 'Tween to a player (bypasses some anti cheats)'}
 CMDs[#CMDs + 1] = {NAME = 'tweenspeed / tspeed [num]', DESC = 'Sets how fast all tween commands go (default is 1)'}
 CMDs[#CMDs + 1] = {NAME = 'vehiclegoto / vgoto [plr]', DESC = 'Go to a player while in a vehicle'}
+CMDs[#CMDs + 1] = {NAME = 'vehicledrop / vdrop [plr]', DESC = 'Warp your vehicle into another player without following it.'}
 CMDs[#CMDs + 1] = {NAME = 'loopgoto [plr] [distance] [delay]', DESC = 'Loop teleport to a player'}
 CMDs[#CMDs + 1] = {NAME = 'unloopgoto', DESC = 'Stops teleporting you to a player'}
 CMDs[#CMDs + 1] = {NAME = 'pulsetp / ptp [plr] [seconds]', DESC = 'Teleports you to a player for a specified ammount of time'}
@@ -5428,12 +5429,39 @@ end
 
 -- [XANE] Checks to see if the given team exists. If it can't be found, a random color is picked based on their user ID.
 function GetESPColorForPlayer(_player, _team)
-	local color = Color3.new(1,1,1)	-- Use white by default.
-	if _team then color = _team.TeamColor
-	else color = Color3.fromHSV(math.random(), math.random()/5, 1)	-- Only use lighter colors.
-	end
+	local color = nil   -- Nil is the default, which should hopefully never be used.
+	-- TeamColor returns a BrickColor, not a Color3! Find a way to convert it befre returning the value.
+	-- if _team then color = _team.TeamColor
+	-- else
+	    color = Color3.fromHSV(math.random(), 0.25 + math.random()/2, 1)	-- Only use lighter colors.
+	-- end
 	
 	return color
+end
+
+function SplitRPName(_text)
+	local FinalName = ""
+	local NameParts = {}
+	
+	-- If this roleplay name is of a decent, short length, jsut return it as-is. Otherwise, divide it up into chunks then add line breaks between them.
+	if _text:len() <= 20 then FinalName = _text
+	else
+		for i = 1, _text:len(), 20 do
+			if i <= _text:len()-20 then	-- If this is a complete twenty-character chunk, use :sub() to grab it. Otherwise, grab from the current character up until -1, the end of the roleplay name.
+				table.insert(NameParts, _text:sub(i, i+20))
+			else
+				table.insert(NameParts, _text:sub(i))
+			end
+		end
+		
+		-- Next, concatenate the final string, only adding line breaks between portions, and not after the last one.
+		for i, portion in ipairs(NameParts) do
+			FinalName = FinalName .. portion
+			if i ~= #NameParts then FinalName = FinalName .. "<br/>" end
+		end
+	end
+	
+	return FinalName
 end
 
 function ESP(plr)
@@ -5487,7 +5515,7 @@ function ESP(plr)
 				TextLabel.TextColor3 = plr:GetAttribute("ESPColor")
 				TextLabel.TextStrokeTransparency = 0
 				TextLabel.TextYAlignment = Enum.TextYAlignment.Bottom
-				TextLabel.Text = 'Name: '..plr.Name
+				TextLabel.Text = '(not initalized)'
 				TextLabel.ZIndex = 10
 				local espLoopFunc
 				local teamChange
@@ -5521,7 +5549,13 @@ function ESP(plr)
 					if COREGUI:FindFirstChild(plr.Name..'_ESP') then
 						if plr.Character and getRoot(plr.Character) and plr.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character and getRoot(Players.LocalPlayer.Character) and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") then
 							local pos = math.floor((getRoot(Players.LocalPlayer.Character).Position - getRoot(plr.Character).Position).magnitude)
-							TextLabel.Text = 'Name: '..plr.DisplayName..' ('..plr.Name..')<br/>Dist: '..pos
+							
+							if plr.Character:FindFirstChild("Head") and plr.Character:FindFirstChild("Head"):FindFirstChildOfClass("BillboardGui") and plr.Character:FindFirstChild("Head"):FindFirstChildOfClass("BillboardGui"):FindFirstChildOfClass("TextLabel") then
+							local temp_RPName = SplitRPName(plr.Character:FindFirstChild("Head"):FindFirstChildOfClass("BillboardGui"):FindFirstChildOfClass("TextLabel").Text)
+								TextLabel.Text = temp_RPName..'<br/>Dist: '..pos
+							else
+								TextLabel.Text = 'Name: '..plr.DisplayName..' ('..plr.Name..')<br/>Dist: '..pos
+							end
 						end
 					else
 						teamChange:Disconnect()
@@ -8587,7 +8621,20 @@ addcmd('tweengoto',{'tgoto','tto','tweento'},function(args, speaker)
 	execCmd('breakvelocity')
 end)
 
+-- TODO: Should this be merged with 'goto' above? It could check for a SeatPart and run this code instead... Decide if this is better than having two commands.
 addcmd('vehiclegoto',{'vgoto','vtp','vehicletp'},function(args, speaker)
+	local players = getPlayer(args[1], speaker)
+	for i,v in pairs(players)do
+		if Players[v].Character ~= nil then
+			local seat = speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart
+			local vehicleModel = seat:FindFirstAncestorWhichIsA("Model")
+			vehicleModel:PivotTo(getRoot(Players[v].Character).CFrame)
+		end
+	end
+end)
+
+-- Uses the original Infinite Yield "vehiclegoto" command code, which uses an outdated Model method which warps the vehicle WITHOUT the exploiter inside of it. This appears to replicate and is abusable, so...
+addcmd('vehicledrop',{'vehiclewarp','vehiclegive','vdrop'},function(args, speaker)
 	local players = getPlayer(args[1], speaker)
 	for i,v in pairs(players)do
 		if Players[v].Character ~= nil then
@@ -11655,7 +11702,7 @@ addcmd('hovername',{},function(args, speaker)
 				nameBox.TextXAlignment = Enum.TextXAlignment.Left
 			end
 			nameBox.Position = UDim2.new(0, xP, 0, y)
-			nameBox.Text = t.Name
+			nameBox.Text = t.DisplayName..'('..t.Name..')'  -- [XANE] Display names are more important to show.
 			nameBox.Visible = true
 			nbSelection.Parent = t
 			nbSelection.Adornee = t
@@ -12169,13 +12216,13 @@ IYMouse.Move:Connect(checkTT)
 
 task.spawn(function()
 	local success, latestVersionInfo = pcall(function() 
-		local versionJson = game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/version')
+		local versionJson = game:HttpGet('https://raw.githubusercontent.com/Xane123/InfiniteFun_IY/master/version')
 		return HttpService:JSONDecode(versionJson)
 	end)
 	
 	if success then
 		if currentVersion ~= latestVersionInfo.Version then
-			notify('Outdated','Get the new version at infyiff.github.io')
+			notify('Outdated','Get the new version from Xane123/InfiniteFun_IY, or use the LoadString version.')
 		end
 		
 		if latestVersionInfo.Announcement and latestVersionInfo.Announcement ~= '' then
