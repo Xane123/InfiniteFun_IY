@@ -4330,10 +4330,10 @@ CMDs[#CMDs + 1] = {NAME = 'deletewaypoint / dwp [name]', DESC = 'Deletes a waypo
 CMDs[#CMDs + 1] = {NAME = 'clearwaypoints / cwp', DESC = 'Clears all waypoints'}
 CMDs[#CMDs + 1] = {NAME = 'cleargamewaypoints / cgamewp', DESC = 'Clears all waypoints for the game you are in'}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
-CMDs[#CMDs + 1] = {NAME = 'goto [plr]', DESC = 'Go to a player'}
+CMDs[#CMDs + 1] = {NAME = 'goto [plr] [y  offset]', DESC = 'Go to a player'}
 CMDs[#CMDs + 1] = {NAME = 'tweengoto / tgoto [plr]', DESC = 'Tween to a player (bypasses some anti cheats)'}
 CMDs[#CMDs + 1] = {NAME = 'tweenspeed / tspeed [num]', DESC = 'Sets how fast all tween commands go (default is 1)'}
-CMDs[#CMDs + 1] = {NAME = 'vehiclegoto / vgoto [plr]', DESC = 'Go to a player while in a vehicle'}
+CMDs[#CMDs + 1] = {NAME = 'vehiclegoto / vgoto [plr] [y  offset]', DESC = 'Go to a player while in a vehicle'}
 CMDs[#CMDs + 1] = {NAME = 'vehicledrop / vdrop [plr]', DESC = 'Warp your vehicle into another player without following it.'}
 CMDs[#CMDs + 1] = {NAME = 'loopgoto [plr] [distance] [delay]', DESC = 'Loop teleport to a player'}
 CMDs[#CMDs + 1] = {NAME = 'unloopgoto', DESC = 'Stops teleporting you to a player'}
@@ -5439,18 +5439,32 @@ function GetESPColorForPlayer(_player, _team)
 	return color
 end
 
+-- [XANE] Looks for a '<3' heart emoticon and removes it; These for some reason break RichText formatting.
+function RemoveHearts(_text)
+	local HeartIndices = string.find(_text, "<3", 1, true)
+	-- Did you see a heart in this part of their RP name? Surgically remove it then assemble the new name fragment.
+	if HeartIndices then
+		if HeartIndices >= string.len(_text)-1 then return string.sub(_text, 1, HeartIndices-1) .. "❤"
+		else
+			local SplitParts = { string.sub(_text, 1, HeartIndices-1), string.sub(_text, HeartIndices+2, -1) }
+			return SplitParts[1] .. "❤" .. SplitParts[2]
+		end
+	else return _text	-- This will return the original string if a heart isn't found within it.
+	end
+end
+
 function SplitRPName(_text)
 	local FinalName = ""
 	local NameParts = {}
 	
-	-- If this roleplay name is of a decent, short length, jsut return it as-is. Otherwise, divide it up into chunks then add line breaks between them.
-	if _text:len() <= 20 then FinalName = _text
+	-- If this roleplay name is of a decent, short length, just return it as-is. Otherwise, divide it up into chunks then add line breaks between them.
+	if _text:len() <= 20 then FinalName = RemoveHearts(_text)
 	else
 		for i = 1, _text:len(), 20 do
 			if i <= _text:len()-20 then	-- If this is a complete twenty-character chunk, use :sub() to grab it. Otherwise, grab from the current character up until -1, the end of the roleplay name.
-				table.insert(NameParts, _text:sub(i, i+20))
+				table.insert(NameParts, RemoveHearts(_text:sub(i, i+20)))
 			else
-				table.insert(NameParts, _text:sub(i))
+				table.insert(NameParts, RemoveHearts(_text:sub(i)))
 			end
 		end
 		
@@ -8595,13 +8609,14 @@ end)
 
 addcmd('goto',{'to'},function(args, speaker)
 	local players = getPlayer(args[1], speaker)
+	local yOffset = args[2] or 0.0	-- The second argument offsets the vehicle from the target player.
 	for i,v in pairs(players)do
 		if Players[v].Character ~= nil then
 			if speaker.Character:FindFirstChildOfClass('Humanoid') and speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart then
 				speaker.Character:FindFirstChildOfClass('Humanoid').Sit = false
 				wait(.1)
 			end
-			getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).CFrame + Vector3.new(3,1,0)
+			getRoot(speaker.Character).CFrame = getRoot(Players[v].Character).CFrame + Vector3.new(3,1,0) + (Vector3.yAxis * yOffset)
 		end
 	end
 	execCmd('breakvelocity')
@@ -8624,11 +8639,12 @@ end)
 -- TODO: Should this be merged with 'goto' above? It could check for a SeatPart and run this code instead... Decide if this is better than having two commands.
 addcmd('vehiclegoto',{'vgoto','vtp','vehicletp'},function(args, speaker)
 	local players = getPlayer(args[1], speaker)
+	local yOffset = args[2] or 0.0	-- The second argument offsets the vehicle from the target player.
 	for i,v in pairs(players)do
 		if Players[v].Character ~= nil then
 			local seat = speaker.Character:FindFirstChildOfClass('Humanoid').SeatPart
 			local vehicleModel = seat:FindFirstAncestorWhichIsA("Model")
-			vehicleModel:PivotTo(getRoot(Players[v].Character).CFrame)
+			vehicleModel:PivotTo(getRoot(Players[v].Character).CFrame * CFrame.new(0, yOffset, 0))
 		end
 	end
 end)
