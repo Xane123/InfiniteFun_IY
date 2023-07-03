@@ -6341,7 +6341,6 @@ end)
 
 addcmd('keepiy', {}, function(args, speaker)
 	if queueteleport then
-		notify('Infinite Fun saved!','This script will now automatically execute when you teleport to other places in this experience.')
 		KeepInfYield = true
 		updatesaves()
 	else
@@ -6360,7 +6359,6 @@ end)
 
 addcmd('toggleunkeepiy', {}, function(args, speaker)
 	if queueteleport then
-		notify('Infinite Fun detached...','This script won't follow you to other places in this game anymore.')
 		KeepInfYield = not KeepInfYield
 		updatesaves()
 	else
@@ -12342,7 +12340,7 @@ task.spawn(function()
 	Credits:Destroy()
 	IntroBackground:Destroy()
 	minimizeHolder()
-	if table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserInputService:GetPlatform())
+	if table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserInputService:GetPlatform()) then
 		local MobileWarnScreen = Instance.new("Message", game:GetService("CoreGui"))
 		MobileWarnScreen.Text = "Infinite Fun is not fun to use on a mobile device. Expect inconveniences and frustration..."
 		game:GetService("Debris"):AddItem(MobileWarnScreen,5.5)
