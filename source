@@ -6733,7 +6733,22 @@ addcmd('serverhop',{'shop'},function(args, speaker)
 		if body and body.data then
 			for i, v in next, body.data do
 				if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-					table.insert(servers, 1, v.id)
+					if args[1] and type(args[1]) == "string" then
+						-- Find servers that are almost completely full (with a bit of leeway to avoid the "server full" error if someone joins at the last second).
+						if (string.lower(args[1]) == "lots" or string.lower(args[1]) == "more") and v.Playing >= v.MaxPlayers - math.round(v.MaxPlayers/8) then
+							table.insert(servers, 1, v.id)
+						-- For those wishing to press their luck with the aforementioned error message, this will try to find servers with exactly one vacant slot.
+						elseif string.lower(args[1]) == "full" and v.Playing == v.MaxPlayers - 1 then
+							table.insert(servers, 1, v.id)
+						-- Try to find servers that barely have anyone on them, great for diamond-farming in Royale High.
+						elseif (string.lower(args[1]) == "empty" or string.lower(args[1]) == "lonely" or string.lower(args[1]) == "less") and v.Playing <= math.round(v.MaxPlayers/12) then
+							table.insert(servers, 1, v.id)
+						-- Just for fun, limit the servers picked to a select few, or potentially none of the valid servers; Lady Luck will decide where you go!
+						elseif string.lower(args[1]) == "random" and math.random(0,255) <= 16 then
+							table.insert(servers, 1, v.id)
+						end
+					else table.insert(servers, 1, v.id)
+					end
 				end
 			end
 		end
