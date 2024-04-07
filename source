@@ -7640,7 +7640,7 @@ addcmd('savegame',{'saveplace'},function(args, speaker)
 				SaveNonCreatable = false
 			}
 		)
-		notify('Place Saved','Saved place to yur executor's workspace folder! Please rename the new file now.')
+		notify('Place Saved','Saved place to yur executor\'s workspace folder! Please rename the new file now.')
 	else
 		notify('Incompatible Executor','Your executor does not support this command (missing saveplace)')
 	end
