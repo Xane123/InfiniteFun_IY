@@ -1,10 +1,10 @@
 --[[
 	XANE'S MODEL RECREATOR (SCRIPT/DECONSTRUCTOR PHASE) V3, WRITTEN IN 2024
-	LAST UPDATED ON MARCH 18TH, 2024
+	LAST UPDATED ON MAY 21ST, 2024
 	
 	A personal script of mine, released to the public to enable anyone to save models (and other supported instances)
-	from any Roblox experience (as long as your Roblox app dosn't crash in the process of loading it)! Execute this
-	script and a small button will appLear at the top of your screen. Click/tap on it to open the GUI, then click on
+	from any Roblox experience (as long as your Roblox app doesn't crash in the process of loading it)! Execute this
+	script and a small button will appear at the top of your screen. Click/tap on it to open the GUI, then click on
 	one of the four buttons at the top of the window to scan through that container, making a list of all of the
 	supported Instances or (sentence I apparently never finished?)
 	
@@ -14,7 +14,7 @@
 	object, if it supports changing the camera's subject to it. To return to your character, right-click or long
 	tap that button.
 	
-	Instances can be selected from one or all of the containers. Switch ebtween them using the top row of buttons,
+	Instances can be selected from one or all of the containers. Switch between them using the top row of buttons,
 	select anything that you want, give a name to this export using the text box at the bottom-right corner, then
 	with one click/tap of the save button, your selection will be transformed into JSON files in your executor's
 	"workspace" folder.
@@ -2803,7 +2803,7 @@ local function ApplyChildAction(_base , _mode, _level, _dest )
 				--table.insert(_dest, InstDictionary)	-- Add this Instance's serialized form to the dictionary!
 			end
 			
-			if AntiLagInstCounter % _G.AntiLagInterval or 25 == 0 then task.wait() end	-- Wait a frame every so often.
+			if AntiLagInstCounter % AntiLagInterval or 25 == 0 then task.wait() end	-- Wait a frame every so often.
 			
 			-- Does this instance have any child instances? Start a new instance of this function, checking those out for now.
 			if #inst:GetChildren() > 0 then
