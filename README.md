@@ -16,9 +16,9 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/InfiniteFun_I
   * **clearscreen** (shortcut is "cscr") - Hides all GUI (core and experience) for the specified number of seconds, then restores them. This is perfect for taking screenshots and recording videos without the forced Roblox button in the upper-left corner of the screen messing it up. (This command doesn't hide GUIs created by exploit scripts, so please hide those manually beforehand.)
   * **goto** and **vgoto** have a new second argument that specifies your vertical offset after teleporting to them. This can be used, for example, at Diamond Beach (Royale High) to chase other players with flyijng jetskis (using vfly at high speeds), annoying them with its unpleasant looping sound.
 
- - Currently 378 commands (377 from IY, 2 new)
+ - Currently 380 commands (378 from IY, 2 new)
  - Open Source
- - 6 years of development (according to Infinite Yield)
+ - 6+ years of development (according to Infinite Yield)
 
 ## Developers
 ### Creator
@@ -45,6 +45,4 @@ To repeat a command multiple times with a delay, use caret (^) characters to sep
 ```
 Lastly, you can edit your keybinds (including click-teleport and part deletion key-holds) in the settings menu (⚙). Want to try it out and join the fun? Execute the LoadString above to do that!
 ## Contributing
-There is no specific rules on contributing (as of now) just open a pull request and if it checks out we will merge it!
-
-If you've made a pull request to Infinite Yield and it was accepted, it will be included in Infinite Fun when its code is updated (when a "git pull" is done).
+I am a bad manager, so I do not believe I could handle pull requests properly, or be able to trust that they will not break any of my commonly-used commands. If you would like to contribute to Infinite Fun, I recommend creating a pull request for Infinite Yield instead; Any accepted changes will be merged into Infinite Fun manually every few months or so.
