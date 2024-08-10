@@ -8550,11 +8550,13 @@ addcmd('replicationlag',{'backtrack'},function(args, speaker)
 end)
 
 addcmd('noprompts', {'nopurchaseprompts'}, function(args, speaker)
-	COREGUI.PurchasePrompt.Enabled = false
+	COREGUI.PurchasePrompt.Enabled = false	-- Gamepass/developer product purchase prompts
+	COREGUI.ThemeProvider.Enabled = false	-- "Favorite this game" prompt and probably others
 end)
 
 addcmd('showprompts', {'showpurchaseprompts'}, function(args, speaker)
 	COREGUI.PurchasePrompt.Enabled = true
+	COREGUI.ThemeProvider.Enabled = true
 end)
 
 addcmd('age',{},function(args, speaker)
