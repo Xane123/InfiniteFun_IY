@@ -165,6 +165,7 @@ if get_hidden_gui or gethui then
 	local hiddenUI = get_hidden_gui or gethui
 	local Main = Instance.new("ScreenGui")
 	Main.Name = randomString()
+	Main.IgnoreGuiInset = true
 	Main.Parent = hiddenUI()
 	PARENT = Main
 elseif (not is_sirhurt_closure) and (syn and syn.protect_gui) then
@@ -607,7 +608,7 @@ Logo.BackgroundTransparency = 1
 Logo.BorderSizePixel = 0
 Logo.Position = UDim2.new(0, 125, 0, 127)
 Logo.Size = UDim2.new(0, 10, 0, 10)
-Logo.Image = "rbxassetid://1352543873"
+Logo.Image = "rbxassetid://18929188075"	-- Infinite Fun has a cuter logo, with my bootleg ixchoco_/Royale High-style poofy letters!
 Logo.ImageTransparency = 0
 Logo.ZIndex = 10
 
@@ -619,7 +620,7 @@ Credits.Position = UDim2.new(0, 0, 0.9, 30)
 Credits.Size = UDim2.new(0, 250, 0, 20)
 Credits.Font = Enum.Font.SourceSansLight
 Credits.FontSize = Enum.FontSize.Size18
-Credits.Text = "Edge // Zwolf // Moon // Toon"
+Credits.Text = "Edge // Zwolf // Moon // Toon // Xane M."
 Credits.TextColor3 = Color3.new(1, 1, 1)
 Credits.ZIndex = 10
 
@@ -7790,7 +7791,7 @@ addcmd('togglefs', {'togglefullscreen'}, function(args, speaker)
 end)
 
 addcmd('inspect', {'examine'}, function(args, speaker)
-	for _, v in ipairs(getPlayer(args[1], speaker)) do
+	for _, v in ipairs(ghetPlayer(args[1], speaker)) do
 		GuiService:CloseInspectMenu()
 		GuiService:InspectPlayerFromUserId(Players[v].UserId)
 	end
@@ -12589,18 +12590,17 @@ if IsOnMobile then
 	local UICorner = Instance.new("UICorner")
 	QuickCapture.Name = randomString()
 	QuickCapture.Parent = PARENT
-	QuickCapture.BackgroundColor3 = Color3.fromRGB(46, 46, 47)
-	QuickCapture.BackgroundTransparency = 0.14
-	QuickCapture.Position = UDim2.new(0.489, 0, 0, 0)
-	QuickCapture.Size = UDim2.new(0, 32, 0, 33)
+	QuickCapture.BackgroundColor3 = Color3.fromRGB(56, 32, 40)
+	QuickCapture.BackgroundTransparency = 0.175
+	QuickCapture.Position = UDim2.fromScale(0.333, -0.025)
+	QuickCapture.Size = UDim2.fromOffset(32, 32)
 	QuickCapture.Font = Enum.Font.SourceSansBold
-	QuickCapture.Text = "IY"
+	QuickCapture.Text = "IF"
 	QuickCapture.TextColor3 = Color3.fromRGB(255, 255, 255)
 	QuickCapture.TextSize = 20.000
 	QuickCapture.TextWrapped = true
 	QuickCapture.Draggable = true
-	UICorner.Name = randomString()
-	UICorner.CornerRadius = UDim.new(0.5, 0)
+	UICorner.CornerRadius = UDim.new(0.333, 0)
 	UICorner.Parent = QuickCapture
 	QuickCapture.MouseButton1Click:Connect(function()
 		Cmdbar:CaptureFocus()
