@@ -1,4 +1,3 @@
-# Infinite Fun (an Infinite Yield mod for Royale High)
 ![Infinite Fun's logo graphic - From top to bottom, there's lilac-colored, italic text that says "Infinite", multi-colored, puffy "FUN" letters, then a smaller, white credit message: "AN Infinite Fun MOD".](https://raw.githubusercontent.com/Xane123/InfiniteFun_IY/master/logo.png)
 The best command line script for Roblox, now with additional commands for Royale High exploiters! (This does **not** add any commands that would allow duplication of "exploited halos".)
 
