@@ -4292,6 +4292,10 @@ function autoComplete(str,curText)
 end
 
 CMDs = {}
+CMDs[#CMDs + 1] = {NAME = 'loadapi', DESC = 'Initializes Xane's Recreator API to getgenv().XRecreator.'}
+CMDs[#CMDs + 1] = {NAME = 'recreator / xmr', DESC = 'Load and show Xane's Model Recreator GUI.'}
+CMDs[#CMDs + 1] = {NAME = 'rhsave', DESC = 'Load the RH Accessory Preserver.'}
+CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
 CMDs[#CMDs + 1] = {NAME = 'discord / support / help', DESC = 'Join Infinite Yield\'s Discord server. (This isn\'t for Infinite Fun.)'}
 CMDs[#CMDs + 1] = {NAME = 'console', DESC = 'Loads old Roblox console'}
 CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX by Moon'}
@@ -12457,6 +12461,38 @@ addcmd('tpunanchored',{'tpua'},function(args, speaker)
             c.Position = Players[v].Character.Head.Position
         end
     end
+end)
+
+-- Xane's script LoadString commands
+addcmd('loadapi',{},function(args, speaker)	-- Initialize the Recreation API
+	if not getgenv().XRecreator then
+		local success, errormsg = pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/API_Recreation.luau'))() end)
+		if not success then
+			notify("The Recreation API couldn't initialize for some reason: " .. errormsg)
+		else
+			notify("The Recreation API has initialized to getgenv().XRecreator! View API_Recreation.luau on Xane123/Roblox-Scripts (GitHub) to learn about its variables and functions.")
+		end
+	else
+		notify("The Recreation API has already been added to getgenv().XRecreator.")
+	end
+end)
+
+addcmd('recreator',{'xmr'},function(args, speaker)	-- Xane's Model Recreator
+	local success, errormsg = pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/XanesModelRecreator.luau'))() end)
+	if getgenv().XRecreator and getgenv().XRecreator.Reserved then
+		notify("Another script is using the Recreation API, which Xane's Model Recreator needs to use. Please close that then try again.")
+	elseif not success then
+		notify("Xane's Model Recreator couldn't load because " .. errormsg)
+	end
+end)
+
+addcmd('rhsave',{},function(args, speaker)	-- RH Accessory Preserver
+	local success, errormsg = pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver.luau'))() end)
+	if getgenv().XRecreator and getgenv().XRecreator.Reserved then
+		notify("Another script is using the Recreation API, which RH Accessory Preserver needs to use. Please close that then try again.")
+	elseif not success then
+		notify("RH Accessory Preserver couldn't load because " .. errormsg)
+	end
 end)
 
 keycodeMap = {
