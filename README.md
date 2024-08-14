@@ -33,7 +33,7 @@ Recreator.Select("set", {
 Recreator.Save(USERNAME .. " (RH character)")
 ```
 
- - Currently 380 commands (378 from IY, 2 new)
+ - Currently 394 commands (389 from IY, 5 new)
  - Open Source
  - 6+ years of development (according to Infinite Yield)
 
