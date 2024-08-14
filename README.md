@@ -25,12 +25,14 @@ local USERNAME = "JoyfulFlowerMary"	-- Replace this with your target's username.
 local Recreator = getgenv().XRecreator
 Recreator.Select("set", {
 	workspace.EquippedStorage.Accessories:FindFirstChild(USERNAME),
+	workspace.EquippedStorage.Hair:FindFirstChild(USERNAME),
 	workspace.EquippedStorage.Skirts:FindFirstChild(USERNAME),
 	workspace.EquippedStorage.Heels:FindFirstChild(USERNAME),
-	workspace.EquippedStorage.Wings:FindFirstChild(USERNAME)
+	workspace.EquippedStorage.Wings:FindFirstChild(USERNAME),
+	workspace.EquippedStorage.Mermaid:FindFirstChild(USERNAME),
 	workspace:FindFirstChild(USERNAME)
 }
-Recreator.Save(USERNAME .. " (RH character)")
+Recreator.Save(USERNAME .. "'s RH char.")
 ```
 
  - Currently 394 commands (389 from IY, 5 new)
