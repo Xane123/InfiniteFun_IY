@@ -7820,10 +7820,10 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 			}
 			
 			synsaveinstance = loadstring(game:HttpGet(Params.RepoURL .. Params.SSI .. ".luau", true), Params.SSI)()
-			if not scripts then
-			synsaveinstance({noscripts = not scripts, filepath = "Infinite Fun place save"})
-			notify("If it finishes, this place/realm will be saved as 'Infinite Fun place save.rbxlx' in your executor's workspace folder.")
 		end
+		
+		synsaveinstance({noscripts = not scripts, removePlayerCharacters = false, filepath = "Infinite Fun place save"})
+		notify("If it finishes, this place/realm will be saved as 'Infinite Fun place save.rbxlx' in your executor's workspace folder.")
 	elseif saveinstance then	-- or saveplace then
 		saveinstance()
 	else notify("Your executor cannot save places (lacking 'saveinstance' function) and UniversalSynSaveInstance wasn't available...")
