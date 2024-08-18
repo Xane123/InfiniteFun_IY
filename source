@@ -7795,7 +7795,7 @@ addcmd('togglefs', {'togglefullscreen'}, function(args, speaker)
 end)
 
 addcmd('inspect', {'examine'}, function(args, speaker)
-	for _, v in ipairs(ghetPlayer(args[1], speaker)) do
+	for _, v in ipairs(getPlayer(args[1], speaker)) do
 		GuiService:CloseInspectMenu()
 		GuiService:InspectPlayerFromUserId(Players[v].UserId)
 	end
