@@ -7810,7 +7810,10 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 	
 	-- UniversalSynSaveInstance is used if the user 
 	if not args[1] or (args[1] and args[1] == "external") or (args[1] and args[1] == "internal" and not saveinstance) then
-		if args[1] and args[1] == "internal" and not saveinstance then notify("Your executor doesn't include a saveinstance() function. Using UniversalSynSaveInstance instead.") end
+		if args[1] and args[1] == "internal" and not saveinstance then
+			notify("Your executor doesn't include a saveinstance() function. Using UniversalSynSaveInstance instead.")
+			wait(5)
+		end
 		
 		-- If it hasn't been loaded yet, "import" UniversalSynSaveInstance now.
 		if not synsaveinstance then
@@ -7822,8 +7825,12 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 			synsaveinstance = loadstring(game:HttpGet(Params.RepoURL .. Params.SSI .. ".luau", true), Params.SSI)()
 		end
 		
+		notify("UniversalSynSaveInstance https://discord.gg/wx4ThpAsmw")
+		task.delay(5, function()
+			notify("You're now using UniversalSynSaveInstance to save any replicated instances. It's licensed under the AGPL v3.0.")
+		end)
 		synsaveinstance({noscripts = not scripts, removePlayerCharacters = false, filepath = "Infinite Fun place save"})
-		notify("If it finishes, this place/realm will be saved as 'Infinite Fun place save.rbxlx' in your executor's workspace folder.")
+		notify("Save completed! Please check your executor's workspace folder for a new RBXLX file.")
 	elseif saveinstance then	-- or saveplace then
 		saveinstance()
 	else notify("Your executor cannot save places (lacking 'saveinstance' function) and UniversalSynSaveInstance wasn't available...")
