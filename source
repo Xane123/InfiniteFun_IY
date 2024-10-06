@@ -4297,7 +4297,7 @@ CMDs[#CMDs + 1] = {NAME = 'recreator / xmr', DESC = 'Load and show Xane\'s Model
 CMDs[#CMDs + 1] = {NAME = 'rhsave', DESC = 'Load the RH Accessory Preserver.'}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
 CMDs[#CMDs + 1] = {NAME = 'discord / support / help', DESC = 'Join Infinite Yield\'s Discord server. (This isn\'t for Infinite Fun.)'}
-CMDs[#CMDs + 1] = {NAME = 'console', DESC = 'Loads old Roblox console'}
+CMDs[#CMDs + 1] = {NAME = 'console / con', DESC = 'Displays the Roblox Dev Console (F9)'}
 CMDs[#CMDs + 1] = {NAME = 'explorer / dex', DESC = 'Opens DEX by Moon'}
 CMDs[#CMDs + 1] = {NAME = 'olddex / odex', DESC = 'Opens Old DEX by Moon'}
 CMDs[#CMDs + 1] = {NAME = 'remotespy / rspy', DESC = 'Opens Simple Spy V3'}
@@ -10337,28 +10337,9 @@ addcmd('deleteselectedtool',{'dst'},function(args, speaker)
 	end
 end)
 
-addcmd('console',{},function(args, speaker)
-	-- Thanks wally!!
-	notify("Loading",'Hold on a sec')
-	local _, str = pcall(function()
-		return game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/console.lua", true)
-	end)
-
-	local s, e = loadstring(str)
-	if typeof(s) ~= "function" then
-		return
-	end
-
-	local success, message = pcall(s)
-	if (not success) then
-		if printconsole then
-			printconsole(message)
-		elseif printoutput then
-			printoutput(message)
-		end
-	end
-	wait(1)
-	notify('Console','Press F9 to open the console')
+-- [XANE] The "old console" was personally useless, so the "console" command opens the F9 console in Infinite Fun instead.
+addcmd('console',{'con'},function(args, speaker)
+	StarterGui:SetCore("DevConsoleVisible", true)
 end)
 
 addcmd('explorer', {'dex'}, function(args, speaker)
