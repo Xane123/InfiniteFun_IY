@@ -7829,7 +7829,7 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 		task.delay(5, function()
 			notify("You're now using UniversalSynSaveInstance to save any replicated instances. It's licensed under the AGPL v3.0.")
 		end)
-		synsaveinstance({noscripts = not scripts, removePlayerCharacters = false, filepath = "Infinite Fun place save"})
+		synsaveinstance({NoScripts = not scripts, RemovePlayerCharacters = false, SavePlayerCharacters = true, FilePath = "Infinite Fun place save"})
 		notify("Save completed! Please check your executor's workspace folder for a new RBXLX file.")
 	elseif saveinstance then	-- or saveplace then
 		saveinstance()
