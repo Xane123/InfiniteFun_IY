@@ -7887,7 +7887,7 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 		
 		-- Unanchor anything that was "frozen" for that save.
 		if freeze and temp_SavePlaceAnchoredParts then
-			for _,part in temp_SavePlaceAnchoredParts do if part and part:FindFirstAncestorWhichIsA("Model") then part.Anchored = false end
+			for _,part in temp_SavePlaceAnchoredParts do if part and part:FindFirstAncestorWhichIsA("Model") then part.Anchored = false end end
 			table.clear(temp_SavePlaceAnchoredParts)
 		end
 		
