@@ -4295,6 +4295,7 @@ CMDs = {}
 CMDs[#CMDs + 1] = {NAME = 'loadapi', DESC = 'Initializes Xane\'s Recreator API to getgenv().XRecreator.'}
 CMDs[#CMDs + 1] = {NAME = 'recreator / xmr', DESC = 'Load and show Xane\'s Model Recreator GUI.'}
 CMDs[#CMDs + 1] = {NAME = 'rhsave', DESC = 'Load the RH Accessory Preserver.'}
+CMDs[#CMDs + 1] = {NAME = 'pmm', DESC = 'Disables RH flight, replacing it with rolling and Air Dashes from PMM.'}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
 CMDs[#CMDs + 1] = {NAME = 'discord / support / help', DESC = 'Join Infinite Yield\'s Discord server. (This isn\'t for Infinite Fun.)'}
 CMDs[#CMDs + 1] = {NAME = 'console / con', DESC = 'Displays the Roblox Dev Console (F9)'}
@@ -12570,6 +12571,10 @@ addcmd('rhsave',{},function(args, speaker)	-- RH Accessory Preserver
 	elseif not success then
 		notify("RH Accessory Preserver couldn't load because " .. errormsg)
 	end
+end)
+
+addcmd('pmm',{},function(args, speaker)	-- Project Magical Mary gameplay (for RH)
+	local success, errormsg = pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/ExtScript_PMMGameplay4RH.luau'))() end)
 end)
 
 keycodeMap = {
