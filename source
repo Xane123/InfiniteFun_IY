@@ -12557,20 +12557,24 @@ end)
 
 addcmd('recreator',{'xmr'},function(args, speaker)	-- Xane's Model Recreator
 	local success, errormsg = pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/XanesModelRecreator.luau'))() end)
-	if getgenv().XRecreator and getgenv().XRecreator.Reserved then
-		notify("Another script is using the Recreation API, which Xane's Model Recreator needs to use. Please close that then try again.")
-	elseif not success then
-		notify("Xane's Model Recreator couldn't load because " .. errormsg)
-	end
+	--[[
+		if getgenv().XRecreator and getgenv().XRecreator.Reserved then
+			notify("Another script is using the Recreation API, which Xane's Model Recreator needs to use. Please close that then try again.")
+		elseif not success then
+			notify("Xane's Model Recreator couldn't load because " .. errormsg)
+		end
+	]]--
 end)
 
 addcmd('rhsave',{},function(args, speaker)	-- RH Accessory Preserver
 	local success, errormsg = pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver.luau'))() end)
-	if getgenv().XRecreator and getgenv().XRecreator.Reserved then
-		notify("Another script is using the Recreation API, which RH Accessory Preserver needs to use. Please close that then try again.")
-	elseif not success then
-		notify("RH Accessory Preserver couldn't load because " .. errormsg)
-	end
+	--[[
+		if getgenv().XRecreator and getgenv().XRecreator.Reserved then
+			notify("Another script is using the Recreation API, which RH Accessory Preserver needs to use. Please close that then try again.")
+		elseif not success then
+			notify("RH Accessory Preserver couldn't load because " .. errormsg)
+		end
+	]]--
 end)
 
 addcmd('pmm',{},function(args, speaker)	-- Project Magical Mary gameplay (for RH)
