@@ -4295,7 +4295,8 @@ CMDs = {}
 CMDs[#CMDs + 1] = {NAME = 'loadapi', DESC = 'Initializes Xane\'s Recreator API to getgenv().XRecreator.'}
 CMDs[#CMDs + 1] = {NAME = 'recreator / xmr', DESC = 'Load and show Xane\'s Model Recreator GUI.'}
 CMDs[#CMDs + 1] = {NAME = 'rhsave', DESC = 'Load the RH Accessory Preserver.'}
-CMDs[#CMDs + 1] = {NAME = 'pmm', DESC = 'Disables RH flight, replacing it with rolling and Air Dashes from PMM.'}
+CMDs[#CMDs + 1] = {NAME = 'betterwelds / bweld', DESC = 'Replaces all active WeldConstraints with classic Welds (for exporting models)'}
+CMDs[#CMDs + 1] = {NAME = 'pmm', DESC = '(BROKEN) Disables RH flight, replacing it with rolling and Air Dashes from PMM.'}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
 CMDs[#CMDs + 1] = {NAME = 'discord / support / help', DESC = 'Join Infinite Yield\'s Discord server. (This isn\'t for Infinite Fun.)'}
 CMDs[#CMDs + 1] = {NAME = 'console / con', DESC = 'Displays the Roblox Dev Console (F9)'}
@@ -12581,6 +12582,25 @@ end)
 
 addcmd('pmm',{},function(args, speaker)	-- Project Magical Mary gameplay (for RH)
 	local success, errormsg = pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/ExtScript_PMMGameplay4RH.luau'))() end)
+end)
+
+-- Scans the workspace for active WeldConswtraints, replacing them with equivalent Welds, handy for saving models from experiences like Dress to Impress, which rely on the modern, less specific/reliable weld style.
+addcmd('betterwelds',{'bweld'},function(args, speaker)	-- Project Magical Mary gameplay (for RH)
+	for _,a in workspace:GetDescendants() do
+		if a:IsA("WeldConstraint") and a.Part0 and a.Part1 and a.Active then
+			local origPart0, origPart1	= a.Part0, a.Part1
+			local origOffset			= a.Part0.CFrame:Inverse() * a.Part1.CFrame
+			local origName, origParent	= a.Name or "Weld", a.Parent or workspace 
+			
+			a:Destroy()
+			local Replacement			= Instance.new("Weld")
+			Replacement.Part0			= origPart0
+			Replacement.Part1			= origPart1
+			Replacement.C0				= origOffset
+			Replacement.Name			= origName
+			Replacement.Parent			= origParent
+		end
+	end
 end)
 
 keycodeMap = {
