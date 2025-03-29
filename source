@@ -4294,7 +4294,7 @@ end
 CMDs = {}
 CMDs[#CMDs + 1] = {NAME = 'loadapi', DESC = 'Initializes Xane\'s Recreator API to getgenv().XRecreator.'}
 CMDs[#CMDs + 1] = {NAME = 'recreator / xmr', DESC = 'Load and show Xane\'s Model Recreator GUI.'}
-CMDs[#CMDs + 1] = {NAME = 'rhsave', DESC = 'Load the RH Accessory Preserver.'}
+CMDs[#CMDs + 1] = {NAME = 'rhsave [old/v1]', DESC = 'Save clothes, dorm furniture, and characters from Royale High.'}
 CMDs[#CMDs + 1] = {NAME = 'betterwelds / bweld', DESC = 'Replaces all active WeldConstraints with classic Welds (for exporting models)'}
 CMDs[#CMDs + 1] = {NAME = 'pmm', DESC = '(BROKEN) Disables RH flight, replacing it with rolling and Air Dashes from PMM.'}
 CMDs[#CMDs + 1] = {NAME = '', DESC = ''}
@@ -12569,7 +12569,14 @@ addcmd('recreator',{'xmr'},function(args, speaker)	-- Xane's Model Recreator
 end)
 
 addcmd('rhsave',{},function(args, speaker)	-- RH Accessory Preserver
-	local success, errormsg = pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver.luau'))() end)
+	local success, errormsg = pcall(function()
+		if table.find(args, "old") or table.find(args, "classic") or table.find(args, "original") or table.find(args, "v1") then loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver.luau'))()
+		else
+			notify('RH Accessory Preserver is going to be upgraded soon(tm)! Please append "old", "v1", "classic", or "original" after "rhsave" to use this legacy version in the future.')
+			loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver.luau'))()
+		end
+	end)
+
 	if not success then warn("Couldn't load RH Accessory Preserver because of an error: " .. errormsg) end
 	--[[
 		if getgenv().XRecreator and getgenv().XRecreator.Reserved then
