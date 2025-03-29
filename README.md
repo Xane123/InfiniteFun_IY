@@ -15,25 +15,11 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/InfiniteFun_I
   * **vdrop** - Infinite Yield's "vgoto" command with a different name! (The vgoto has been updated to use the PivotTo() method, restoring its intended behavior.) Glitchily moves the vehicle that you're sitting in to another player. This has only been tested with the Divinia Park boats in Royale High, which levitate down to whichever player that's targetted.
   * **clearscreen** (shortcut is "cscr") - Hides all GUI (core and experience) for the specified number of seconds, then restores them. This is perfect for taking screenshots and recording videos without the forced Roblox button in the upper-left corner of the screen messing it up. (This command doesn't hide GUIs created by exploit scripts, so please hide those manually beforehand.)
   * **goto** and **vgoto** have a new second argument that specifies your vertical offset after teleporting to them. This can be used, for example, at Diamond Beach (Royale High) to chase other players with flyijng jetskis (using vfly at high speeds), annoying them with its unpleasant looping sound.
+  * **betterwelds** (shortcut is "bweld") - Replaces active WeldConstraints in the workspace with classic Welds, improving the reliability and usability of saved character models and clothes from games that use these modern welds like *Dress to Impress*.
   * Three commands have been added that load my other scripts!
   * * **loadapi** - Sets up my Recreation API (Xane123/Roblox-Scripts/API_Recreation.luau), which adds functions and variables related to saving (and eventually loading) instances to and from JSON files! My scripts use it.
-  * * **recreator** - Xane's Model Recreator, a mostly user-friendly GUI frontend for the Recreation API. Mark then save nearly anything to JSON files, which can be imported into Roblox Studio using my plugin!
-  * * **rhsave** - RH Accessory Preserver, a somewhat picky script that can capture specific toggle/variation combinations in Royale High. You can save your captures to JSON files using Xane's Model Recreator above. (Remember to close this script before trying to load it, though.)
-If you want to save full Royale High characters, you shouldn't use RH Accessory Preserver, which only works with single accessories on a mostly bare character. To save characters, use Xane's Model Recreator's Characters tab or use this code (but run the **loadapi** command in Infinite Fun first!):
-```lua
-local USERNAME = "JoyfulFlowerMary"	-- Replace this with your target's username.
-local Recreator = getgenv().XRecreator
-Recreator.Select("set", {
-	workspace.EquippedStorage.Accessories:FindFirstChild(USERNAME),
-	workspace.EquippedStorage.Hair:FindFirstChild(USERNAME),
-	workspace.EquippedStorage.Skirts:FindFirstChild(USERNAME),
-	workspace.EquippedStorage.Heels:FindFirstChild(USERNAME),
-	workspace.EquippedStorage.Wings:FindFirstChild(USERNAME),
-	workspace.EquippedStorage.Mermaid:FindFirstChild(USERNAME),
-	workspace:FindFirstChild(USERNAME)
-}
-Recreator.Save(USERNAME .. "'s RH char.")
-```
+    * **recreator** - Xane's Model Recreator, a mostly user-friendly GUI frontend for the Recreation API. Mark then save nearly anything to JSON files, which can be imported into Roblox Studio using my plugin!
+    * **rhsave** - RH Accessory Preserver, a somewhat picky script that can capture specific toggle/variation combinations in Royale High. You can save your captures to JSON files using Xane's Model Recreator above. (Remember to close this script before trying to load it, though.)
 
  - Currently 394 commands (389 from IY, 5 new)
  - Open Source
@@ -54,13 +40,13 @@ Xane M. / JoyfulFlowerMary
 ## Usage
 Press your prefix key (defaults to ';') to show the command list and command line. Here, you can click a command to auto-fill it, or type a command's name to narrow your choices in the list. Hover over a command to read a brief description of what it does, along with its arguments, which are typed after the command, separated by spaces.
 
-For example, to teleport ten studs above a random player, enter this command then press **enter**:
+For example, to save the current place/realm to "Testing.rbxlx" using [UniversalSynSaveInstance](https://github.com/luau/UniversalSynSaveInstance), including players' character models in Lighting, enter this command then press **enter**:
 ```
-goto random 10
+saveplace external players named Testing
 ```
-To repeat a command multiple times with a delay, use caret (^) characters to separate the number of times to repeat (use ```inf``` to never stop until the ```breakloops``` command is ran), the delay in seconds, and the command to execute. For example, to send "Infinite Fun!" in chat five times every half a second, use this command:
+To repeat a command multiple times with a delay, use caret (^) characters to separate the number of times to repeat (use ```inf``` to never stop until the ```breakloops``` command is ran), the delay in seconds, and the command to execute. For example, to warp above a random player five times every half a second, use this command:
 ```
-5^0.5^chat Infinte Fun!
+5^0.5^goto random 6
 ```
 Lastly, you can edit your keybinds (including click-teleport and part deletion key-holds) in the settings menu (⚙). Want to try it out and join the fun? Execute the LoadString above to do that!
 ## Contributing
