@@ -12888,10 +12888,10 @@ end)
 
 addcmd('rhsave',{},function(args, speaker)	-- RH Accessory Preserver
 	local success, errormsg = pcall(function()
-		if table.find(args, "old") or table.find(args, "classic") or table.find(args, "original") or table.find(args, "v1") then loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver.luau'))()
+		if table.find(args, "old") or table.find(args, "classic") or table.find(args, "original") or table.find(args, "v1") then loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver/old.luau'))()
 		else
 			notify('RH Accessory Preserver is going to be upgraded soon(tm)! Please append "old", "v1", "classic", or "original" after "rhsave" to use this legacy version in the future.')
-			loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver.luau'))()
+			loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver/old.luau'))()
 		end
 	end)
 
