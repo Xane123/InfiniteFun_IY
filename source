@@ -12888,11 +12888,17 @@ end)
 
 addcmd('rhsave',{},function(args, speaker)	-- RH Accessory Preserver
 	local success, errormsg = pcall(function()
-		if table.find(args, "old") or table.find(args, "classic") or table.find(args, "original") or table.find(args, "v1") then loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver/old.luau'))()
-		else
-			notify('RH Accessory Preserver is going to be upgraded soon(tm)! Please append "old", "v1", "classic", or "original" after "rhsave" to use this legacy version in the future.')
-			loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver/old.luau'))()
+		local temp_version = 1	-- Load the original release by default, for now.
+		local temp_URLs = {
+			'https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver/old.luau',	-- v1
+			'https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver/new.luau'	-- v2
+		}
+		if table.find(args, "old") or table.find(args, "classic") or table.find(args, "original") or table.find(args, "v1") then temp_version = 1
+		elseif table.find(args, "new") or table.find(args, "v2") then temp_version = 2
 		end
+
+		if temp_version == 1 then notify('RH Accessory Preserver is almost upgraded! Please add "v2" to try it out, or "v1" to load this version in the future.') end
+		loadstring(game:HttpGet(temp_URLs[temp_version]))()
 	end)
 
 	if not success then warn("Couldn't load RH Accessory Preserver because of an error: " .. errormsg) end
