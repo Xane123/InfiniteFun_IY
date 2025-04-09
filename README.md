@@ -1,5 +1,6 @@
-![Infinite Fun's logo graphic - From top to bottom, there's lilac-colored, italic text that says "Infinite", multi-colored, puffy "FUN" letters, then a smaller, white credit message: "AN Infinite Fun MOD".](https://raw.githubusercontent.com/Xane123/InfiniteFun_IY/master/logo.png)
-The best command line script for Roblox, now with additional commands for Royale High exploiters! (This does **not** add any commands that would allow duplication of "exploited halos".)
+![Infinite Fun's logo graphic - From top to bottom, there's lilac-colored, italic text that says "Infinite", multi-colored, puffy "FUN" letters, then a smaller, white credit message: "AN Infinite Fun MOD".](./logo.png)
+
+The best command line script for Roblox, now with additional commands for exploiters wanting to save models and other assets from Roblox experiences!
 
 To use Infinite Fun, execute this LoadString:
 ```
@@ -40,6 +41,8 @@ Xane M. / JoyfulFlowerMary
 ## Usage
 Press your prefix key (defaults to ';') to show the command list and command line. Here, you can click a command to auto-fill it, or type a command's name to narrow your choices in the list. Hover over a command to read a brief description of what it does, along with its arguments, which are typed after the command, separated by spaces.
 
+If you're using a touchscreen or mobile device, showing the main UI and selecting the text box within it can be annoying. Tap on the floating "IF" button to immediately focus on the text field.
+
 For example, to save the current place/realm to "Testing.rbxlx" using [UniversalSynSaveInstance](https://github.com/luau/UniversalSynSaveInstance), including players' character models in Lighting, enter this command then press **enter**:
 ```
 saveplace external players named Testing
@@ -48,6 +51,6 @@ To repeat a command multiple times with a delay, use caret (^) characters to sep
 ```
 5^0.5^goto random 6
 ```
-Lastly, you can edit your keybinds (including click-teleport and part deletion key-holds) in the settings menu (⚙). Want to try it out and join the fun? Execute the LoadString above to do that!
+Lastly, you can edit your keybinds (including click-teleport and part deletion key-holds) in the settings menu (⚙). Want to try it out and join the *fun*? 😉 Execute the LoadString above to do that!
 ## Contributing
 I am a bad manager, so I do not believe I could handle pull requests properly, or be able to trust that they will not break any of my commonly-used commands. If you would like to contribute to Infinite Fun, I recommend creating a pull request for Infinite Yield instead; Any accepted changes will be merged into Infinite Fun manually every few months or so.
