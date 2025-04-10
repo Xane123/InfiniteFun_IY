@@ -7826,14 +7826,6 @@ local synsaveinstance = nil	-- UniversalSynSaveInstance is loaded into this vari
 addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores the executor's saveinstance() command if it exists; It will happily use UniversalSynSaveInstance, which is almost perfect anyways.
 	local scripts = false	-- Args[1] is the mode ("internal"/"external") and Args[2] determines if scripts are decompiled and included with captures.
 	local freeze = table.find(args, "freeze") or table.find(args, "pose")	-- If a "freeze" or "pose" keyword is found anywhere, all cloned players will be anchored, keeping their poses.
-	local localUSSI = table.find(args, "workspace")	-- If the word "workspace" is used, a local copy of saveinstance.luau is checked for in the executor's workspace folder.
-	local localUSSIContents = nil
-	if localUSSI then
-		local success, errormsg = pcall(function()
-			localUSSIContents = readfile("saveinstance.luau")
-		end)
-		if not localUSSIContents then localUSSI = nil end	-- If the file cannot be accessed or found, the "local file request" flag is unset.
-	end
 	
 	local SaveParams = {
 		NoScripts = true,
@@ -7867,7 +7859,7 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 	if args[2] and (args[2] == "true" or args[2] == "yes" or args[2] == "scripts" or args[2] == "y" or args[2] == "include") then scripts = true end
 	SaveParams.NoScripts = not scripts
 	
-	-- UniversalSynSaveInstance is used if the user 
+	-- UniversalSynSaveInstance is used if the user requests the "external" saver, or if they specify "internal" but their executor doesn't support saveinstance().
 	if not args[1] or (args[1] and args[1] == "external") or (args[1] and args[1] == "internal" and not saveinstance) then
 		if args[1] and args[1] == "internal" and not saveinstance then
 			notify("Your executor doesn't include a saveinstance() function. Using UniversalSynSaveInstance instead.")
@@ -7927,7 +7919,31 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 		
 		notify("Save completed! Check for any errors in the top-right corner. If there are none, check your executor's workspace folder!")
 	elseif saveinstance then	-- or saveplace then
-		saveinstance()
+		local temp_SavePlaceAnchoredParts	= {}	-- List of players' parts that were locked in place during this capture.
+		for _,player in Players:GetPlayers() do	-- This code was copy-pasted from the UniversalSynSaveInstance() code above.
+			local char = player.Character
+			if char then
+				char.Archivable = true
+				if freeze then
+					for _,desc in char:GetDescendants() do
+						if desc:IsA("BasePart") and not desc.Anchored then
+							table.insert(temp_SavePlaceAnchoredParts, desc)
+							desc.Anchored = true
+						end
+					end
+				end
+			end
+		end
+
+		notify('Saving current place using your executor\'s saveinstance() function.')
+		task.wait(0.15)
+		saveinstance(game, filename, {Decompile = scripts, RemovePlayerCharacters = false, SavePlayers = true, NilInstances = true})
+		
+		-- Unanchor anything that was "frozen" for that save.
+		if freeze and temp_SavePlaceAnchoredParts then
+			for _,part in temp_SavePlaceAnchoredParts do if part and part:FindFirstAncestorWhichIsA("Model") then part.Anchored = false end end
+			table.clear(temp_SavePlaceAnchoredParts)
+		end
 	else notify("Your executor cannot save places (lacking 'saveinstance' function) and UniversalSynSaveInstance wasn't available...")
 	end
 	
