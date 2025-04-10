@@ -13379,7 +13379,29 @@ task.spawn(function()
 	minimizeHolder()
 	if table.find({Enum.Platform.IOS, Enum.Platform.Android}, UserInputService:GetPlatform()) then
 		local MobileWarnScreen = Instance.new("Hint", game:GetService("CoreGui"))
-		MobileWarnScreen.Text = "Infinite Fun isn't fun to use on mobile. Good luck!"
-		game:GetService("Debris"):AddItem(MobileWarnScreen,4.25)
+		MobileWarnScreen.Text = "Use the IF button to enter commands!"
+		game:GetService("Debris"):AddItem(MobileWarnScreen,3.5)
 	end
 end)
+
+local EventTitleModInfo	= {
+	Dates				= {
+		"03 20",
+		"04 01",
+		"06 20",
+		"12 17",
+		"12 25"
+	},
+	Strings				= {
+		"🎀It's Mary's birthday!",
+		"Eternal Pain",
+		"Happy birthday, Xane!",
+		"🩷🪽Happy birthday, Rafoy!",
+		"Merry Christmas/Glitterfrost!"
+	}
+}
+
+local temp_dateStringMatchIndex = table.find(EventTitleModInfo.Dates, os.date("%m %d"))
+if temp_dateStringMatchIndex then
+	Title.Text = string.gsub(Title.Text, "Infinite Fun (IY Mod)", EventTitleModInfo.Strings[temp_dateStringMatchIndex])
+end
