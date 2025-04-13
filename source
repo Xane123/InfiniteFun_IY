@@ -7823,6 +7823,13 @@ addcmd('inspect', {'examine'}, function(args, speaker)
 end)
 
 local synsaveinstance = nil	-- UniversalSynSaveInstance is loaded into this variable the first time savegame/saveplace is called below.
+local function StoreSurfaceAppearanceColors(_root : Instance, _set : boolean)
+	for _,inst in _root:GetDescendants() do
+		if inst:IsA("SurfaceAppearance") then
+			inst:SetAttribute("InfiniteFun_SurfAppColor", if _set then inst.Color else nil)
+		end
+	end
+end
 addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores the executor's saveinstance() command if it exists; It will happily use UniversalSynSaveInstance, which is almost perfect anyways.
 	local scripts = false	-- Args[1] is the mode ("internal"/"external") and Args[2] determines if scripts are decompiled and included with captures.
 	local freeze = table.find(args, "freeze") or table.find(args, "pose")	-- If a "freeze" or "pose" keyword is found anywhere, all cloned players will be anchored, keeping their poses.
@@ -7859,6 +7866,12 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 	if args[2] and (args[2] == "true" or args[2] == "yes" or args[2] == "scripts" or args[2] == "y" or args[2] == "include") then scripts = true end
 	SaveParams.NoScripts = not scripts
 	
+	-- UniversalSynSaveInstance and KRNL's saveinstance() function don't save SurfaceAppearances' colors, which turns RH's trees white. Store their colors in attributes.
+	StoreSurfaceAppearanceColors(workspace, true)
+	StoreSurfaceAppearanceColors(game:GetService("Players"), true)
+	StoreSurfaceAppearanceColors(game:GetService("Lighting"), true)
+	StoreSurfaceAppearanceColors(game:GetService("ReplicatedStorage"), true)
+	
 	-- UniversalSynSaveInstance is used if the user requests the "external" saver, or if they specify "internal" but their executor doesn't support saveinstance().
 	if not args[1] or (args[1] and args[1] == "external") or (args[1] and args[1] == "internal" and not saveinstance) then
 		if args[1] and args[1] == "internal" and not saveinstance then
@@ -7880,7 +7893,7 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 			end
 		end
 		
-		notify("UniversalSynSaveInstance https://discord.gg/wx4ThpAsmw")
+		notify("UniversalSynSaveInstance https://discord.gg/wx4ThpAsmw")	-- This is the required credit string, as stated in the USSI README.
 		task.delay(5, function()
 			notify("You're now using UniversalSynSaveInstance to save any replicated instances. It's licensed under the AGPL v3.0.")
 		end)
@@ -7946,6 +7959,12 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 		end
 	else notify("Your executor cannot save places (lacking 'saveinstance' function) and UniversalSynSaveInstance wasn't available...")
 	end
+	
+	-- Undo any "saved" SurfaceAppearance colors, removing the attributes added earlier in this command.
+	StoreSurfaceAppearanceColors(workspace, false)
+	StoreSurfaceAppearanceColors(game:GetService("Players"), false)
+	StoreSurfaceAppearanceColors(game:GetService("Lighting"), false)
+	StoreSurfaceAppearanceColors(game:GetService("ReplicatedStorage"), false)
 	
 end)
 
