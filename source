@@ -7872,6 +7872,15 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 	StoreSurfaceAppearanceColors(game:GetService("Lighting"), true)
 	StoreSurfaceAppearanceColors(game:GetService("ReplicatedStorage"), true)
 	
+	--[[
+		Roblox is forcing all experiences to migrate to TextChatService, and will annoyingly remind the user about this if the Chat service has any instances inside it.
+		This is kind of annoying, so let's "disable" that reminder by just wiping it clean now.
+	]]--
+	_, _ = pcall(function()
+		if #game:GetService("Chat"):GetChildren() > 0 then game:GetService("Chat"):ClearAllChildren() end
+		if game:GetService("TextChatService").ChatVersion ~= Enum.ChatVersion.TextChatService then game:GetService("TextChatService").ChatVersion = Enum.ChatVersion.TextChatService end
+	end)
+	
 	-- UniversalSynSaveInstance is used if the user requests the "external" saver, or if they specify "internal" but their executor doesn't support saveinstance().
 	if not args[1] or (args[1] and args[1] == "external") or (args[1] and args[1] == "internal" and not saveinstance) then
 		if args[1] and args[1] == "internal" and not saveinstance then
