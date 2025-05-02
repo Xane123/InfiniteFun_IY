@@ -11479,33 +11479,109 @@ addcmd('touchinterests', {'touchinterest', 'firetouchinterests', 'firetouchinter
 	end
 end)
 
+local List_SavedLightingProps				= {
+	Lighting								= {
+		"Ambient",				"Brightness",			"EnvironmentDiffuseScale",	"EnvironmentSpecularScale",
+		"ColorShift_Top",		"ClockTime",			"GeographicLatitude",		"OutdoorAmbient",
+		"ShadowSoftness",		"FogColor",				"FogStart",					"FogEnd"
+	},
+	ColorCorrection							= {
+		"Brightness",			"Contrast",				"Enabled",					"Saturation",
+		"TintColor"
+	}
+}
+
+--[[
+	Lighting and ColorCorrectionEffect values from before starting a "loopfb" loop, used to restore the
+	game's intended lighting. The values listed here are placeholders.
+]]--
+local preFullBrightProps					= {
+	Lighting								= {
+		Ambient								= Color3.new(1,1,1),
+		Brightness							= 1,
+		EnvironmentDiffuseScale				= 0.5,
+		EnvironmentSpecularScale			= 0.5,
+		ColorShift_Top						= Color3.new(0.5,0.5,0.5),
+		ClockTime							= 12,
+		GeographicLatitude					= 22.5,
+		OutdoorAmbient						= Color3.new(1,1,1),
+		ShadowSoftness						= 0.25,
+		FogColor							= Color3.new(0.5,0.825,1),
+		FogStart							= 500,
+		FogEnd								= 750
+	},
+	ColorCorrection							= {
+		Brightness							= 0,
+		Contrast							= 0,
+		Enabled								= false,
+		Saturation							= 0,
+		TintColor							= Color3.new(1,1,1)
+	}
+}
+
+local temp_colorCorrection					= Lighting:FindFirstChildWhichIsA("ColorCorrectionEffect")
+
+-- Changes Lighting properties to Sunset Island (RH)'s private server values.
+local function DoFullBright()
+	Lighting.Ambient						= Color3.fromRGB(126, 126, 126)
+	Lighting.Brightness						= 2.2
+	Lighting.ColorShift_Top					= Color3.fromRGB(247, 232, 232)
+	Lighting.EnvironmentDiffuseScale		= 0
+	Lighting.EnvironmentSpecularScale		= 0
+	Lighting.OutdoorAmbient					= Color3.fromRGB(153, 153, 153)
+	Lighting.ShadowSoftness					= 0.1
+	Lighting.ClockTime						= 15
+	Lighting.GeographicLatitude				= 0
+	Lighting.FogColor						= Color3.fromRGB(54, 131, 226)
+	Lighting.FogStart						= 250
+	Lighting.FogEnd							= 300
+
+	temp_colorCorrection					= Lighting:FindFirstChildWhichIsA("ColorCorrectionEffect")
+	if temp_colorCorrection then
+		temp_colorCorrection.Brightness		= 0
+		temp_colorCorrection.Contrast		= 0.1
+		temp_colorCorrection.Enabled		= true
+		temp_colorCorrection.Saturation		= 0.2
+		temp_colorCorrection.TintColor		= Color3.new(1,1,1)
+	end
+end
+
+local function DisconnectFullBrightLoop()
+	if brightLoop then
+		brightLoop:Disconnect()
+
+		-- Restore the saved/original Lighting/color correction values, since we aren't modifying them anymore.
+		for _,prop in List_SavedLightingProps.Lighting do
+			Lighting[prop]						= preFullBrightProps.Lighting[prop]
+		end
+		temp_colorCorrection					= Lighting:FindFirstChildWhichIsA("ColorCorrectionEffect")
+		for _,prop in List_SavedLightingProps.ColorCorrection do
+			temp_colorCorrection[prop]			= preFullBrightProps.ColorCorrection[prop]
+		end
+	end
+end
+
 addcmd('fullbright',{'fb','fullbrightness'},function(args, speaker)
-	Lighting.Brightness = 2
-	Lighting.ClockTime = 14
-	Lighting.FogEnd = 100000
-	Lighting.GlobalShadows = false
-	Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+	DoFullBright()
 end)
 
 addcmd('loopfullbright',{'loopfb'},function(args, speaker)
-	if brightLoop then
-		brightLoop:Disconnect()
+	DisconnectFullBrightLoop()
+
+	-- Store the current values in preFullBrightProps before modifying them.
+	for _,prop in List_SavedLightingProps.Lighting do
+		preFullBrightProps.Lighting[prop]	= Lighting[prop]
 	end
-	local function brightFunc()
-		Lighting.Brightness = 2
-		Lighting.ClockTime = 14
-		Lighting.FogEnd = 100000
-		Lighting.GlobalShadows = false
-		Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+	temp_colorCorrection					= Lighting:FindFirstChildWhichIsA("ColorCorrectionEffect")
+	for _,prop in List_SavedLightingProps.ColorCorrection do
+		preFullBrightProps.ColorCorrection[prop] = temp_colorCorrection[prop]
 	end
 
-	brightLoop = RunService.RenderStepped:Connect(brightFunc)
+	brightLoop = RunService.RenderStepped:Connect(DoFullBright)
 end)
 
 addcmd('unloopfullbright',{'unloopfb'},function(args, speaker)
-	if brightLoop then
-		brightLoop:Disconnect()
-	end
+	DisconnectFullBrightLoop()
 end)
 
 addcmd('ambient',{},function(args, speaker)
