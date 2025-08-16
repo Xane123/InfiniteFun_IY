@@ -7830,6 +7830,19 @@ local function StoreSurfaceAppearanceColors(_root : Instance, _set : boolean)
 		end
 	end
 end
+
+-- Re-assigns all instances tagged with one tag another tag, useful for "disabling" WindShake, for example.
+local function MoveBetweenTags(_oldTag : string, _newTag : string)
+	local temp_tagged = game:GetService("CollectionService"):GetTagged(_oldTag)
+	if #temp_tagged > 0 then
+		for _,instance in temp_tagged do
+			instance:RemoveTag(_oldTag)
+			instance:AddTag(_newTag)
+		end
+	end
+	return nil
+end
+
 addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores the executor's saveinstance() command if it exists; It will happily use UniversalSynSaveInstance, which is almost perfect anyways.
 	local scripts = false	-- Args[1] is the mode ("internal"/"external") and Args[2] determines if scripts are decompiled and included with captures.
 	local freeze = table.find(args, "freeze") or table.find(args, "pose")	-- If a "freeze" or "pose" keyword is found anywhere, all cloned players will be anchored, keeping their poses.
@@ -7866,6 +7879,10 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 	if args[2] and (args[2] == "true" or args[2] == "yes" or args[2] == "scripts" or args[2] == "y" or args[2] == "include") then scripts = true end
 	SaveParams.NoScripts = not scripts
 	
+	-- Disable WindShake and SmartBone (if they're used) so everything is saved in its "neutral" position.
+	MoveBetweenTags("WindShake", "Disabled_WindShake")
+	MoveBetweenTags("SmartBone", "Disabled_SmartBone")
+
 	-- UniversalSynSaveInstance and KRNL's saveinstance() function don't save SurfaceAppearances' colors, which turns RH's trees white. Store their colors in attributes.
 	StoreSurfaceAppearanceColors(workspace, true)
 	StoreSurfaceAppearanceColors(game:GetService("Players"), true)
@@ -7975,6 +7992,9 @@ addcmd('savegame',{'saveplace'},function(args, speaker)	-- This function ignores
 	StoreSurfaceAppearanceColors(game:GetService("Lighting"), false)
 	StoreSurfaceAppearanceColors(game:GetService("ReplicatedStorage"), false)
 	
+	-- Also, restore any renamed WindShake/SmartBone tags, now that everything has been saved.
+	MoveBetweenTags("Disabled_WindShake", "WindShake")
+	MoveBetweenTags("Disabled_SmartBone", "SmartBone")
 end)
 
 addcmd('clearerror',{'clearerrors'},function(args, speaker)

@@ -21,7 +21,7 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/InfiniteFun_I
   * **betterwelds** (shortcut: ```bweld```) - Replaces active WeldConstraints in the workspace with classic Welds, improving the reliability and usability of saved character models and clothes from games that use these modern welds like *Dress to Impress*.
   * Three commands have been added that load my other scripts!
   * * **loadapi** - Sets up my Recreation API (Xane123/Roblox-Scripts/API_Recreation.luau), which adds functions and variables related to saving (and eventually loading) instances to and from JSON files! My scripts use it.
-    * **recreator** (shortcut: ```xmr```) - Xane's Model Recreator, a mostly user-friendly GUI frontend for the Recreation API. Mark then save nearly anything to JSON files, which can be imported into Roblox Studio using my plugin!
+    * **recreator** (shortcut: ```xmr```) - Xane's Model Recreator, a mostly user-friendly GUI frontend for the Recreation API. Mark then save nearly anything to JSON files, which can be imported into Roblox Studio using [this plugin][importPluginURL]!
     * **rhsave** - RH Accessory Preserver, a somewhat picky script that can capture specific toggle/variation combinations in Royale High. You can save your captured models using the "saveplace" command, which saves the whole realm to a RBXLX file. Clothes are stored in the "Clothing Captures" sub-folder within the Lighting service. You may also use Xane's Model Recreator to just save that folder to JSON files, but this isn't as recommended, since the Recreation API cannot save unions.
 
  - Currently 394 commands (389 from IY, 7 added in IF)
@@ -56,3 +56,5 @@ To repeat a command multiple times with a delay, use caret (^) characters to sep
 Lastly, you can edit your keybinds (including click-teleport and part deletion key-holds) in the settings menu (⚙). Want to try it out and join the *fun*? 😉 Execute the LoadString above to do that!
 ## Contributing
 I am a bad manager, so I do not believe I could handle pull requests properly, or be able to trust that they will not break any of my commonly-used commands. If you would like to contribute to Infinite Fun, I recommend creating a pull request for Infinite Yield instead; Any accepted changes will be merged into Infinite Fun manually every few months or so.
+
+[importPluginURL]: https://www.dropbox.com/scl/fi/xrv2mx9gpjlvks3vnisz4/XMDLRecreator_ImportTool.rbxm?rlkey=ltv22ona3z1r1uxz946zw9mdy&dl=0
