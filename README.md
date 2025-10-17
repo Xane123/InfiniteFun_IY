@@ -24,18 +24,19 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/InfiniteFun_I
     * **recreator** (shortcut: ```xmr```) - Xane's Model Recreator, a mostly user-friendly GUI frontend for the Recreation API. Mark then save nearly anything to JSON files, which can be imported into Roblox Studio using [this plugin][importPluginURL]!
     * **rhsave** - RH Accessory Preserver, a somewhat picky script that can capture specific toggle/variation combinations in Royale High. You can save your captured models using the "saveplace" command, which saves the whole realm to a RBXLX file. Clothes are stored in the "Clothing Captures" sub-folder within the Lighting service. You may also use Xane's Model Recreator to just save that folder to JSON files, but this isn't as recommended, since the Recreation API cannot save unions.
 
- - Currently 394 commands (389 from IY, 7 added in IF)
+ - Currently 407 commands (400 from IY, 7 added in IF)
  - Open Source
- - 6+ years of development (according to Infinite Yield)
+ - 7+ years of development (according to Infinite Yield)
 
 ## Developers
 ### Creator
 Edge
 
 ### Developers
-Moon
-Zwolf
-Toon
+### Developers
+
+#### Creator: [Edge](https://github.com/EdgeIY)
+#### Developers: [Moon](https://github.com/LorekeeperZinnia), [Zwolf](https://github.com/luatsuki), [Hunter](https://github.com/tooslzy), [Toon](https://github.com/Toon-arch), [Peyton](https://github.com/peyton2465), [ATP](https://github.com/ionizedparticle)
 
 ### Infinite Fun Modder
 Xane M. / JoyfulFlowerMary
