@@ -13133,7 +13133,7 @@ end)
 
 addcmd('rhsave',{},function(args, speaker)	-- RH Accessory Preserver
 	local success, errormsg = pcall(function()
-		local temp_version = 1	-- Load the original release by default, for now.
+		local temp_version = 2	-- Load the new, improved version now that it's almost finished.
 		local temp_URLs = {
 			'https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver/old.luau',	-- v1
 			'https://raw.githubusercontent.com/Xane123/Roblox-Scripts/main/RHAccessoryPreserver/new.luau'	-- v2
@@ -13142,7 +13142,7 @@ addcmd('rhsave',{},function(args, speaker)	-- RH Accessory Preserver
 		elseif table.find(args, "new") or table.find(args, "v2") then temp_version = 2
 		end
 
-		if temp_version == 1 then notify('RH Accessory Preserver is almost upgraded! Please add "v2" to try it out, or "v1" to load this version in the future.') end
+		if temp_version == 2 then notify('To use the original/old version of RH Accessory Preserver, type "rhsave v1" instead. It won't be updated, though.') end
 		loadstring(game:HttpGet(temp_URLs[temp_version]))()
 	end)
 
