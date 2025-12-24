@@ -13142,7 +13142,7 @@ addcmd('rhsave',{},function(args, speaker)	-- RH Accessory Preserver
 		elseif table.find(args, "new") or table.find(args, "v2") then temp_version = 2
 		end
 
-		if temp_version == 2 then notify('To use the original/old version of RH Accessory Preserver, type "rhsave v1" instead. It won't be updated, though.') end
+		if temp_version == 2 then notify('To use the original/old version of RH Accessory Preserver, type "rhsave v1" instead. It won\'t be updated, though.') end
 		loadstring(game:HttpGet(temp_URLs[temp_version]))()
 	end)
 
