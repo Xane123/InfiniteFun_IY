@@ -7003,7 +7003,7 @@ addcmd("serverhop", {"shop"}, function(args, speaker)
 			for _,server in servers do
 				if server.ping and tonumber(server.ping) and tonumber(server.ping) > records.Ping then
 					records = {
-						Id = server.id
+						Id = server.id,
 						Ping = tonumber(server.ping)
 					}
 				end
