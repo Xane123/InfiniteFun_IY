@@ -6990,13 +6990,31 @@ addcmd("serverhop", {"shop"}, function(args, speaker)
     if body and body.data then
         for i, v in next, body.data do
             if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= JobId then
-                table.insert(servers, 1, v.id)
+                table.insert(servers, 1, v)	-- [XANE] Store the full dictionary entry instead of just the ID's.
             end
         end
     end
 
     if #servers > 0 then
-        TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)], Players.LocalPlayer)
+		if args and args[1] and args[1] == "worst" then
+			-- In "worst" mode, scan the list and find the server with the worst ping.
+			notify("Serverhop", "Finding the server with the worst ping/most latency…")
+			local records = { Id = "0", Ping = 0 }
+			for _,server in servers do
+				if server.ping and tonumber(server.ping) and tonumber(server.ping) > records.Ping then
+					records = {
+						Id = server.id
+						Ping = tonumber(server.ping)
+					}
+				end
+			end
+			if records.Ping > 0 and records.Id ~= "0" then
+				TeleportService:TeleportToPlaceInstance(PlaceId, records.Id, Players.LocalPlayer)
+			else return notify("Serverhop", "Couldn't find the worst server.")
+			end
+		else
+			TeleportService:TeleportToPlaceInstance(PlaceId, servers[math.random(1, #servers)].id, Players.LocalPlayer)
+		end
     else
         return notify("Serverhop", "Couldn't find a server.")
     end
