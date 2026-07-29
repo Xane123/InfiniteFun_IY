@@ -26,20 +26,13 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/Xane123/InfiniteFun_I
 
  - Currently 407 commands (400 from IY, 7 added in IF)
  - Open Source
- - 7+ years of development (according to Infinite Yield)
+ - 8+ years of development (according to Infinite Yield)
 
 ## Developers
-### Creator
-Edge
 
-### Developers
-### Developers
-
-#### Creator: [Edge](https://github.com/EdgeIY)
-#### Developers: [Moon](https://github.com/LorekeeperZinnia), [Zwolf](https://github.com/luatsuki), [Hunter](https://github.com/tooslzy), [Toon](https://github.com/Toon-arch), [Peyton](https://github.com/peyton2465), [ATP](https://github.com/ionizedparticle)
-
-### Infinite Fun Modder
-Xane M. / JoyfulFlowerMary
+### Creator: [Edge](https://github.com/EdgeIY)
+### Developers: [Moon](https://github.com/LorekeeperZinnia), [Zwolf](https://github.com/luatsuki), [Sleaze](https://github.com/sleaze5), [Toon](https://github.com/Toon-arch), [Peyton](https://github.com/peyton2465), [ATP](https://github.com/ionizedparticle)
+### Infinite Fun Modder: Xane123
 
 ## Usage
 Press your prefix key (defaults to ';') to show the command list and command line. Here, you can click a command to auto-fill it, or type a command's name to narrow your choices in the list. Hover over a command to read a brief description of what it does, along with its arguments, which are typed after the command, separated by spaces.
