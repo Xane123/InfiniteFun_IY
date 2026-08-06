@@ -9356,6 +9356,7 @@ addcmd('vehicledrop',{'vehiclewarp','vehiclegive','vdrop'},function(args, speake
 			vehicleModel:MoveTo(getRoot(Players[v].Character).Position)
 		end
 	end
+end)
 
 addcmd("vehiclegoto", {"vgoto", "vtp", "vehicletp"}, function(args, speaker)
     local character = speaker.Character
